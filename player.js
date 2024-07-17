@@ -37,15 +37,19 @@ export class Player {
     // player key input movement
     if (this.game.input.keys.includes("w")) {
       this.y -= this.speed * deltaTime;
+      this.game.camera.move(deltaTime, 0, -this.speed);
     }
     if (this.game.input.keys.includes("s")) {
       this.y += this.speed * deltaTime;
+      this.game.camera.move(deltaTime, 0, this.speed);
     }
     if (this.game.input.keys.includes("a")) {
       this.x -= this.speed * deltaTime;
+      this.game.camera.move(deltaTime, -this.speed, 0);
     }
     if (this.game.input.keys.includes("d")) {
       this.x += this.speed * deltaTime;
+      this.game.camera.move(deltaTime, this.speed, 0);
     }
     if (
       this.game.input.keys.includes("w") ||

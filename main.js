@@ -4,7 +4,13 @@
 
 import { Player } from "./player.js";
 import { Map } from "./map.js";
+import { Camera } from "./camera.js";
 import { InputHandler } from "./inputHandler.js";
+
+// define global variables
+export const GAME_COLUMNS = 25;
+export const GAME_ROWS = 16;
+export const GAME_TILE_WIDTH = 32;
 
 // set up canvas
 const canvas = document.getElementById("mainCanvas");
@@ -19,8 +25,9 @@ class Game {
   constructor(width, height) {
     this.width = width;
     this.height = height;
-    this.player = new Player(this);
     this.map = new Map(this);
+    this.camera = new Camera(this);
+    this.player = new Player(this);
     this.input = new InputHandler(this);
   }
   update(deltaTime) {
