@@ -17,9 +17,6 @@
   image-rendering: pixelated;
 }
 
-#playerSprite {
-  display: none;
-}
-#textureSheet {
+.hide {
   display: none;
 }

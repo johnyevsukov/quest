@@ -6,17 +6,18 @@ import { Player } from "./player.js";
 import { Map } from "./map.js";
 import { Camera } from "./camera.js";
 import { InputHandler } from "./inputHandler.js";
+import { Debug } from "./debug.js";
 
 // define global variables
-export const GAME_COLUMNS = 25;
-export const GAME_ROWS = 16;
-export const GAME_TILE_WIDTH = 32;
+export const GAME_COLUMNS = 20;
+export const GAME_ROWS = 12;
+export const GAME_TILE_WIDTH = 40;
 
 // set up canvas
 const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = 800;
-canvas.height = 512;
+canvas.height = 480;
 
 ctx.imageSmoothingEnabled = false;
 
@@ -29,6 +30,7 @@ class Game {
     this.camera = new Camera(this);
     this.player = new Player(this);
     this.input = new InputHandler(this);
+    this.debug = new Debug(this);
   }
   update(deltaTime) {
     this.player.update(deltaTime);
@@ -36,6 +38,7 @@ class Game {
   draw(ctx, deltaTime) {
     this.map.draw(ctx);
     this.player.draw(ctx, deltaTime);
+    this.debug.draw(ctx);
   }
 }
 

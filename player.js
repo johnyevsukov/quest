@@ -5,28 +5,34 @@
 export class Player {
   constructor(game) {
     this.game = game;
-    this.spriteWidth = 100;
-    this.spriteHeight = 100;
-    this.width = this.spriteWidth * 1.5;
-    this.height = this.spriteHeight * 1.5;
-    this.x = 20;
-    this.y = 20;
+    this.image = document.getElementById("knightSpriteSheet");
+    this.spriteWidth = 48;
+    this.spriteHeight = 48;
+    this.width = this.spriteWidth * 2;
+    this.height = this.spriteHeight * 2;
+    this.x = 50;
+    this.y = 50;
     this.speed = 100;
-    this.image = document.getElementById("playerSprite");
+    this.maxSpriteFrame = 8;
     this.animationCount = 0;
     this.animationInterval = 0.05;
     this.currentSpriteFrame = 0;
+    this.direction = "down";
     this.states = {
       idle: {
         sprite: {
-          frames: 6,
-          frameY: 0,
+          down: 0,
+          right: 48,
+          up: 96,
+          left: 144,
         },
       },
       walk: {
         sprite: {
-          frames: 8,
-          frameY: 100,
+          down: 192,
+          right: 240,
+          up: 288,
+          left: 336,
         },
       },
     };
@@ -36,18 +42,22 @@ export class Player {
   update(deltaTime) {
     // player key input movement
     if (this.game.input.keys.includes("w")) {
+      this.direction = "up";
       this.y -= this.speed * deltaTime;
       this.game.camera.move(deltaTime, 0, -this.speed);
     }
     if (this.game.input.keys.includes("s")) {
+      this.direction = "down";
       this.y += this.speed * deltaTime;
       this.game.camera.move(deltaTime, 0, this.speed);
     }
     if (this.game.input.keys.includes("a")) {
+      this.direction = "left";
       this.x -= this.speed * deltaTime;
       this.game.camera.move(deltaTime, -this.speed, 0);
     }
     if (this.game.input.keys.includes("d")) {
+      this.direction = "right";
       this.x += this.speed * deltaTime;
       this.game.camera.move(deltaTime, this.speed, 0);
     }
@@ -75,9 +85,9 @@ export class Player {
     }
 
     let spriteFrameX =
-      (Math.floor(this.currentSpriteFrame) % this.currentState.sprite.frames) *
+      (Math.floor(this.currentSpriteFrame) % this.maxSpriteFrame) *
       this.spriteWidth;
-    let spriteFrameY = this.currentState.sprite.frameY;
+    let spriteFrameY = this.currentState.sprite[this.direction];
 
     ctx.drawImage(
       this.image,
