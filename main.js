@@ -9,8 +9,8 @@ import { InputHandler } from "./inputHandler.js";
 import { Debug } from "./debug.js";
 
 // define global variables
-export const GAME_COLUMNS = 20;
-export const GAME_ROWS = 12;
+export const GAME_COLUMNS = 30;
+export const GAME_ROWS = 20;
 export const GAME_TILE_WIDTH = 40;
 
 // set up canvas
@@ -34,6 +34,7 @@ class Game {
   }
   update(deltaTime) {
     this.player.update(deltaTime);
+    this.camera.update(this.player);
   }
   draw(ctx, deltaTime) {
     this.map.draw(ctx);

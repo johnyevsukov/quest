@@ -18,21 +18,24 @@ export class Map {
   }
   // retrieve current tile in level map array
   getTile(map, col, row) {
-    return map[row * GAME_COLUMNS + col];
+    return map[row * GAME_COLUMNS + col] - 1;
   }
 
   draw(ctx) {
     ctx.save();
 
     const startCol = Math.floor(this.game.camera.x / GAME_TILE_WIDTH);
+    const endCol = startCol + this.game.camera.width / GAME_TILE_WIDTH;
+
     const startRow = Math.floor(this.game.camera.y / GAME_TILE_WIDTH);
+    const endRow = startRow + this.game.camera.height / GAME_TILE_WIDTH;
 
     const offsetX = -this.game.camera.x + startCol * GAME_TILE_WIDTH;
     const offsetY = -this.game.camera.y + startRow * GAME_TILE_WIDTH;
 
     // draw out level map tile by tile
-    for (let row = 0; row < GAME_ROWS; row++) {
-      for (let col = 0; col < GAME_COLUMNS; col++) {
+    for (let row = startRow; row <= endRow; row++) {
+      for (let col = startCol; col <= endCol; col++) {
         const tile = this.getTile(LEVEL_ONE, col, row);
         const x = (col - startCol) * GAME_TILE_WIDTH + offsetX;
         const y = (row - startRow) * GAME_TILE_WIDTH + offsetY;
