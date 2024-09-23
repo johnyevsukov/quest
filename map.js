@@ -27,7 +27,7 @@ export class Map {
 
     const tile = this.getTile(LEVEL_ONE, col, row) + 1;
 
-    return tile !== 118; // ground tile
+    return tile !== 118 && tile !== 119; // ground tiles
   }
 
   getCol(x) {
