@@ -21,6 +21,28 @@ export class Map {
     return map[row * GAME_COLUMNS + col] - 1;
   }
 
+  isSolidTileAtXY(x, y) {
+    const col = Math.floor(x / 40);
+    const row = Math.floor(y / 40);
+
+    const tile = this.getTile(LEVEL_ONE, col, row) + 1;
+
+    return tile !== 118; // ground tile
+  }
+
+  getCol(x) {
+    return Math.floor(x / 40);
+  }
+  getRow(y) {
+    return Math.floor(y / 40);
+  }
+  getX(col) {
+    return col * 40;
+  }
+  getY(row) {
+    return row * 40;
+  }
+
   draw(ctx) {
     ctx.save();
 

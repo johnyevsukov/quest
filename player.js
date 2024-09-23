@@ -21,11 +21,15 @@ export class Player {
     // x and y position relative to entire game map
     this.offsetX = this.spriteSheetWidth;
     this.offsetY = this.spriteSheetHeight;
-    this.x = this.offsetX;
-    this.y = this.offsetY;
+    this.x = 100;
+    this.y = 100;
+    // this.x = this.offsetX;
+    // this.y = this.offsetY;
     // x and y position relative to screen
     this.screenX = 0;
     this.screenY = 0;
+    // needed to prevent glitching into / around walls
+    this.collisionBuffer = 1;
     // walk speed of 4 tiles per second
     this.speed = GAME_TILE_WIDTH * 4;
     this.maxSpriteFrame = 8;
@@ -54,9 +58,52 @@ export class Player {
     this.currentState = this.states.idle;
   }
 
+  colide(dir, dirX, dirY) {
+    let col = 0;
+    let row = 0;
+
+    let left = this.x - this.offsetX + (this.spriteWidth - this.width) / 2;
+    let right = this.x - this.offsetX + (this.spriteWidth - this.width);
+    let top = this.y - this.offsetY + (this.spriteWidth - this.width) / 2;
+    let bottom = this.y - this.offsetY + (this.spriteWidth - this.width);
+
+    let collision =
+      this.game.map.isSolidTileAtXY(left, top) ||
+      this.game.map.isSolidTileAtXY(right, top) ||
+      this.game.map.isSolidTileAtXY(right, bottom) ||
+      this.game.map.isSolidTileAtXY(left, bottom);
+    if (!collision) {
+      return;
+    }
+
+    if (dir === "horizontal") {
+      if (dirX < 0) {
+        col = this.game.map.getCol(left);
+        this.x =
+          this.width / 2 + this.game.map.getX(col + 1) + this.collisionBuffer;
+      } else if (dirX > 0) {
+        col = this.game.map.getCol(right);
+        this.x =
+          -this.width / 2 + this.game.map.getX(col) - this.collisionBuffer;
+      }
+    } else if (dir === "vertical") {
+      if (dirY < 0) {
+        row = this.game.map.getRow(top);
+        this.y =
+          this.height / 2 + this.game.map.getY(row + 1) + this.collisionBuffer;
+      } else if (dirY > 0) {
+        row = this.game.map.getRow(bottom);
+        this.y =
+          -this.height / 2 + this.game.map.getY(row) - this.collisionBuffer;
+      }
+    }
+  }
+
   walk(deltaTime, dirX, dirY) {
     this.x += dirX * this.speed * deltaTime;
+    this.colide("horizontal", dirX, dirY);
     this.y += dirY * this.speed * deltaTime;
+    this.colide("vertical", dirX, dirY);
 
     // clamp values
     let minX = this.offsetX - (this.spriteWidth - this.width) / 2;
