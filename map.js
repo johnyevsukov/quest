@@ -43,6 +43,7 @@ export class Map {
     return row * 40;
   }
 
+  // for demo only
   drawText = (ctx) => {
     ctx.font = "16px 'Press Start 2P'";
     ctx.fillStyle = "rgba(255, 255, 255)";
@@ -85,6 +86,7 @@ export class Map {
       }
     }
 
+    // for demo only
     this.drawText(ctx);
 
     ctx.restore();
