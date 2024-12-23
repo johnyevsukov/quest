@@ -21,7 +21,7 @@ export class Player {
     // x and y position relative to entire game map
     this.offsetX = this.spriteSheetWidth;
     this.offsetY = this.spriteSheetHeight;
-    this.x = 422;
+    this.x = 600;
     this.y = 175;
     // this.x = this.offsetX;
     // this.y = this.offsetY;

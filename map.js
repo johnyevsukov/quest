@@ -43,6 +43,16 @@ export class Map {
     return row * 40;
   }
 
+  drawText = (ctx) => {
+    ctx.font = "16px 'Press Start 2P'";
+    ctx.fillStyle = "rgba(255, 255, 255)";
+    ctx.fillText("- QUEST - ", 340, 70);
+    ctx.fillStyle = "rgba(255, 255, 255)";
+    ctx.fillText("press W,A,S,D to move", 250, 120);
+    ctx.fillStyle = "rgba(255, 255, 0)";
+    ctx.fillText("🚧 under construction 🚧", 238, 95);
+  };
+
   draw(ctx) {
     ctx.save();
 
@@ -74,6 +84,8 @@ export class Map {
         );
       }
     }
+
+    this.drawText(ctx);
 
     ctx.restore();
   }
